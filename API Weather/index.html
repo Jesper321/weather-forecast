@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" type="text/css">
+    <h1>Weather API</h1>
+</head>
+    <script>
+        
+        getText("https://api.openweathermap.org/data/2.5/forecast?q=Zwolle,nl&appid=7bb94cd900bc0bcf893cb52603ca2aa0")
+        .then(response => {
+            
+            let table = document.querySelector("table");
+
+            response.list.forEach(item => {
+                table.innerHTML += `<tr>
+                    
+                    <td>${item.dt_txt.split(' ')[0]}</td>
+                    <td>${item.dt_txt.split(' ')[1]}</td>
+                    <td>${Math.round(item.main.temp - 272.15)}°C</td>
+                    <td>${item.main.humidity}%</td><td>${item.main.pressure} hPa</td>
+                    <td>${item.weather[0].description} </td> 
+                    <td><img class="icon" src="https://openweathermap.org/img/wn/${item.weather[0].icon}.png" alt="icon"></td>
+                    <td>${item.wind.speed} km/h</td></tr>`;
+            });
+        });
+ 
+        async function getText(url) {
+            let x = await fetch(url);
+            let y = await x.json();
+            return y;
+        }
+
+        function fshow(weather) {
+            let table = "<h1>Het weer voor " + weather.city.name + "</h1>";
+
+            table += "<table>";
+            table += "<tr><th>Datum</th><th>Temperatuur</th></tr>";
+
+            for (let i = 0; i < weather.list.length; i++) {
+                const item = weather.list[i];
+                
+                table += `<tr><td>${item.dt_txt}</td><td>${Math.round((item.main.temp - 273) * 10) / 10}</td><td>${math.round((item.main.feels_like - 273) * 10) / 10}</td><td>`;
+            }
+            table += "</table>";
+            document.getElementById("outputDiv").innerHTML = table;
+        }
+    </script>
+<body>
+    
+
+    <table>
+
+        <tr>
+            <th>Datum</th>
+            <th>Tijd</th>
+            <th>Tempratuur</th>
+            <th>Vochtigheid</th>
+            <th>Druk</th>
+            <th>Bewolking</th>
+            <th></th>
+            <th>Wind</th>
+        </tr>
+
+    </table>
+</body>
+</html>
