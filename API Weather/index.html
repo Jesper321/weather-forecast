@@ -17,6 +17,7 @@
             response.list.forEach(item => {
                 table.innerHTML += `<tr>
                     
+                    
                     <td>${item.dt_txt.split(' ')[0]}</td>
                     <td>${item.dt_txt.split(' ')[1]}</td>
                     <td>${Math.round(item.main.temp - 272.15)}°C</td>
@@ -31,21 +32,6 @@
             let x = await fetch(url);
             let y = await x.json();
             return y;
-        }
-
-        function fshow(weather) {
-            let table = "<h1>Het weer voor " + weather.city.name + "</h1>";
-
-            table += "<table>";
-            table += "<tr><th>Datum</th><th>Temperatuur</th></tr>";
-
-            for (let i = 0; i < weather.list.length; i++) {
-                const item = weather.list[i];
-                
-                table += `<tr><td>${item.dt_txt}</td><td>${Math.round((item.main.temp - 273) * 10) / 10}</td><td>${math.round((item.main.feels_like - 273) * 10) / 10}</td><td>`;
-            }
-            table += "</table>";
-            document.getElementById("outputDiv").innerHTML = table;
         }
     </script>
 <body>
